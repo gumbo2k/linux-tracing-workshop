@@ -61,7 +61,7 @@ tplist -p $(pgrep -n postgres) | grep postgres
 As you see, there are a number of probes for query execution, such as `query__start`, `query__execute__start`, `query__done`, `query__execute__done`, and some others. We are going to use the first one of these, which takes the executed query as its first parameter. The problem is finding the process id to attach to -- you can see all the postgres processes by running `ps -ef | grep postgres`, and pick the backend process for your client connection (experimenting until you find the right one):
 
 ```
-trace -p $POSTGRES_PID 'u:/usr/local/pgsql/bin/postgres:query__start "%s", arg1'
+trace -p $(pgrep -n postgres) 'u:/usr/local/pgsql/bin/postgres:query__start "%s", arg1'
 ```
 
 Now, go back to the psql shell and run some SQL statements. For example:
